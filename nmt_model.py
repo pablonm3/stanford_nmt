@@ -336,7 +336,7 @@ class NMT(nn.Module):
         e_t = torch.bmm(enc_hiddens_proj, dec_hidden_reshaped)
         assert list(e_t.size()) == [b, src_len, 1]
         e_t = torch.squeeze(e_t)
-        #assert list(e_t.size()) == [b, src_len]
+        assert list(e_t.size()) == [b, src_len]
         ### END YOUR CODE
 
         # Set e_t to -inf where enc_masks has 1
@@ -372,18 +372,18 @@ class NMT(nn.Module):
         ###         https://pytorch.org/docs/stable/torch.html#torch.tanh
         softmax = nn.Softmax()
         alpha_t = softmax(e_t)
-        #assert list(alpha_t.size()) == [b, src_len]
-        #assert list(enc_hiddens.size()) == [b, src_len, 2 * h]
+        assert list(alpha_t.size()) == [b, src_len]
+        assert list(enc_hiddens.size()) == [b, src_len, 2 * h]
         alpha_t_reshaped = torch.unsqueeze(alpha_t, dim=1)
-        #assert list(alpha_t_reshaped.size()) == [b, 1, src_len]
+        assert list(alpha_t_reshaped.size()) == [b, 1, src_len]
         a_t = torch.bmm(alpha_t_reshaped, enc_hiddens)
-        #assert list(a_t.size()) == [b, 1, 2 * h]
+        assert list(a_t.size()) == [b, 1, 2 * h]
         a_t = torch.squeeze(a_t)
-        #assert list(a_t.size()) == [b, 2 * h]
+        assert list(a_t.size()) == [b, 2 * h]
         U_t = torch.cat((a_t, dec_hidden), dim=1) #FIXME: is dim ok?
-        #assert list(U_t.size()) == [b, 3 * h]
+        assert list(U_t.size()) == [b, 3 * h]
         V_t = self.combined_output_projection(U_t)
-        #assert list(V_t.size()) == [b, h]
+        assert list(V_t.size()) == [b, h]
         O_t = self.dropout(torch.tanh(V_t))
         ### END YOUR CODE
 
