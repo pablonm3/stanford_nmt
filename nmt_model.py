@@ -336,7 +336,7 @@ class NMT(nn.Module):
         e_t = torch.bmm(enc_hiddens_proj, dec_hidden_reshaped)
         assert list(e_t.size()) == [b, src_len, 1]
         e_t = torch.squeeze(e_t)
-        assert list(e_t.size()) == [b, src_len]
+        #assert list(e_t.size()) == [b, src_len]
         ### END YOUR CODE
 
         # Set e_t to -inf where enc_masks has 1
